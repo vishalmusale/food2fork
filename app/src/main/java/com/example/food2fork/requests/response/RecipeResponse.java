@@ -10,6 +10,10 @@ public class RecipeResponse {
     @Expose()
     private Recipe recipe;
 
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
     @Override
     public String toString() {
         return "RecipeResponse{" +

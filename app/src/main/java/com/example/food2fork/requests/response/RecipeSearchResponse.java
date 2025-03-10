@@ -15,6 +15,14 @@ public class RecipeSearchResponse {
     @Expose()
     private List<Recipe> recipes;
 
+    public int getCount() {
+        return count;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
     @Override
     public String  toString() {
         return "RecipeSearchResponse{" +
