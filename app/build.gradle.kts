@@ -43,4 +43,7 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.gson)
+
+    implementation(libs.viewmodel)
+    implementation(libs.livedata)
 }

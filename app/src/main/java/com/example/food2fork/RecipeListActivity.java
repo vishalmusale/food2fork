@@ -8,12 +8,15 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.food2fork.models.Recipe;
 import com.example.food2fork.requests.RecipeApi;
 import com.example.food2fork.requests.ServiceGenerator;
 import com.example.food2fork.requests.response.RecipeResponse;
 import com.example.food2fork.requests.response.RecipeSearchResponse;
+import com.example.food2fork.viewmodels.RecipeListViewModel;
 
 import java.io.IOException;
 import java.util.AbstractList;
@@ -26,17 +29,28 @@ import retrofit2.Response;
 
 public class RecipeListActivity extends BaseActivity {
     private static final String TAG = "RecipeListActivity";
-
+    private RecipeListViewModel mRecipeListViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
 
-        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+        mRecipeListViewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
+        subscribeObservers();
+//        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                testGetRecipe();
+//                testGetRecipeList();
+//            }
+//        });
+    }
+
+    private void subscribeObservers() {
+        mRecipeListViewModel.getmRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
-            public void onClick(View v) {
-                testGetRecipe();
-                testGetRecipeList();
+            public void onChanged(List<Recipe> recipes) {
+
             }
         });
     }
