@@ -85,6 +85,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
                 if(recipes != null){
+                    mRecipeListViewModel.setmIsPerformingQuery(false);
                     Testing.printRecipes("network test", recipes);
                     mRecipeRecyclerAdapter.setRecipes(recipes);
                 }
