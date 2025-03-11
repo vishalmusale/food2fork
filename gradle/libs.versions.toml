@@ -14,6 +14,7 @@ rxandroid_version = "3.0.2"
 cardview_version = "1.0.0"
 recyclerview_version = "1.4.0"
 glide_version = "4.14.2"
+circleimageview_version = "3.1.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -33,6 +34,7 @@ cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview_version"}
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide_version"}
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide_version"}
+circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview_version"}
 
 
 [plugins]
