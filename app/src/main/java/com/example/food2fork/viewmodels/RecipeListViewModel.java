@@ -13,6 +13,15 @@ public class RecipeListViewModel extends ViewModel {
     private boolean mIsViewingRecipes;
     public RecipeListViewModel() {
         mRecipeRepository = RecipeRepository.getInstance();
+        mIsViewingRecipes = false;
+    }
+
+    public boolean ismIsViewingRecipes() {
+        return mIsViewingRecipes;
+    }
+
+    public void setmIsViewingRecipes(boolean mIsViewingRecipes) {
+        this.mIsViewingRecipes = mIsViewingRecipes;
     }
 
     public boolean ismIsViewingRecipes() {
