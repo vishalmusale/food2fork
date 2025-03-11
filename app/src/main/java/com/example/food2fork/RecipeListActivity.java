@@ -3,6 +3,7 @@ package com.example.food2fork;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
@@ -37,6 +38,23 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         if(!mRecipeListViewModel.ismIsViewingRecipes()){
             displaySearchCategories();
         }
+
+        //  BackPress
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mRecipeListViewModel.onBackPressed()) {
+                    // If the ViewModel allows back navigation, finish the activity
+                    finish();
+                } else {
+                    // Otherwise, display search categories
+                    displaySearchCategories();
+                }
+            }
+        };
+
+        // Register the callback with the OnBackPressedDispatcher
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private void initSearchView() {
