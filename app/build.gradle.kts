@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.annotationProcessor
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -51,4 +53,8 @@ dependencies {
     implementation(libs.rxandroid)
 
     implementation(libs.cardview)
+    implementation(libs.recyclerview)
+
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
 }
