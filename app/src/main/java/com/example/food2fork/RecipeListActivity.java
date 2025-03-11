@@ -3,6 +3,7 @@ package com.example.food2fork;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,17 +32,29 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         mRecipeListViewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
         initRecyclerView();
         subscribeObservers();
-        testRetrofitRequest();
+        initSearchView();
+    }
+
+    private void initSearchView() {
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mRecipeListViewModel.searchRecipesApi(query, 1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void initRecyclerView(){
         mRecipeRecyclerAdapter = new RecipeRecyclerAdapter(this);
         mRecyclerView.setAdapter(mRecipeRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void testRetrofitRequest(){
-        mRecipeListViewModel.searchRecipesApi("chicken", 1);
     }
 
     private void subscribeObservers() {
