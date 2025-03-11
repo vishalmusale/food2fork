@@ -1,6 +1,7 @@
 package com.example.food2fork;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -33,6 +34,9 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         initRecyclerView();
         subscribeObservers();
         initSearchView();
+        if(!mRecipeListViewModel.ismIsViewingRecipes()){
+            displaySearchCategories();
+        }
     }
 
     private void initSearchView() {
@@ -40,6 +44,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                mRecipeRecyclerAdapter.displayLoading();
                 mRecipeListViewModel.searchRecipesApi(query, 1);
                 return false;
             }
@@ -71,11 +76,17 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onRecipeClick(int position) {
-
+        Log.d(TAG, "onRecipeClick: clicked. " + position);
     }
 
     @Override
     public void onCategoryClick(String category) {
+        mRecipeRecyclerAdapter.displayLoading();
+        mRecipeListViewModel.searchRecipesApi(category, 1);
+    }
 
+    private void displaySearchCategories(){
+        mRecipeListViewModel.setmIsViewingRecipes(false);
+        mRecipeRecyclerAdapter.displaySearchCategories();
     }
 }
