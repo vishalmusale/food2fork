@@ -24,14 +24,6 @@ public class RecipeListViewModel extends ViewModel {
         this.mIsViewingRecipes = mIsViewingRecipes;
     }
 
-    public boolean ismIsViewingRecipes() {
-        return mIsViewingRecipes;
-    }
-
-    public void setmIsViewingRecipes(boolean mIsViewingRecipes) {
-        this.mIsViewingRecipes = mIsViewingRecipes;
-    }
-
     public LiveData<List<Recipe>> getRecipes() {
         return mRecipeRepository.getRecipes();
     }
