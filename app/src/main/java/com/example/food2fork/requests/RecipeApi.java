@@ -8,12 +8,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface RecipeApi {
-    @GET("/search")
+    @GET("search")
     Call<RecipeSearchResponse> searchRecipe (
             @Query("q") String query
     );
 
-    @GET("/get")
+    @GET("get")
     Call<RecipeResponse> getRecipe (
             @Query("rId") String query
     );

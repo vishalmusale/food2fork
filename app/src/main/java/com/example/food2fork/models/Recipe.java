@@ -10,22 +10,20 @@ import java.util.Arrays;
 public class Recipe implements Parcelable {
     private String publisher;
     private String[] ingredients;
-    private String sourceURL;
-    private String recipeID;
-    private String imageURL;
-    private long socialRank;
-    private String publisherURL;
+    private String source_url;
+    private String recipe_id;
+    private String image_url;
+    private String publisher_url;
     private String title;
 
     public Recipe(String publisher, String[] ingredients, String sourceURL, String recipeID,
-                  String imageURL, long socialRank, String publisherURL, String title) {
+                  String imageURL, String publisherURL, String title) {
         this.publisher = publisher;
         this.ingredients = ingredients;
-        this.sourceURL = sourceURL;
-        this.recipeID = recipeID;
-        this.imageURL = imageURL;
-        this.socialRank = socialRank;
-        this.publisherURL = publisherURL;
+        this.source_url = sourceURL;
+        this.recipe_id = recipeID;
+        this.image_url = imageURL;
+        this.publisher_url = publisherURL;
         this.title = title;
     }
 
@@ -35,11 +33,10 @@ public class Recipe implements Parcelable {
     protected Recipe(Parcel in) {
         publisher = in.readString();
         ingredients = in.createStringArray();
-        sourceURL = in.readString();
-        recipeID = in.readString();
-        imageURL = in.readString();
-        socialRank = in.readLong();
-        publisherURL = in.readString();
+        source_url = in.readString();
+        recipe_id = in.readString();
+        image_url = in.readString();
+        publisher_url = in.readString();
         title = in.readString();
     }
 
@@ -72,43 +69,35 @@ public class Recipe implements Parcelable {
     }
 
     public String getSourceURL() {
-        return sourceURL;
+        return source_url;
     }
 
     public void setSourceURL(String sourceURL) {
-        this.sourceURL = sourceURL;
+        this.source_url = sourceURL;
     }
 
     public String getRecipeID() {
-        return recipeID;
+        return recipe_id;
     }
 
     public void setRecipeID(String recipeID) {
-        this.recipeID = recipeID;
+        this.recipe_id = recipeID;
     }
 
     public String getImageURL() {
-        return imageURL;
+        return image_url;
     }
 
     public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    public long getSocialRank() {
-        return socialRank;
-    }
-
-    public void setSocialRank(long socialRank) {
-        this.socialRank = socialRank;
+        this.image_url = imageURL;
     }
 
     public String getPublisherURL() {
-        return publisherURL;
+        return publisher_url;
     }
 
     public void setPublisherURL(String publisherURL) {
-        this.publisherURL = publisherURL;
+        this.publisher_url = publisherURL;
     }
 
     public String getTitle() {
@@ -124,11 +113,10 @@ public class Recipe implements Parcelable {
         return "Recipe{" +
                 "publisher='" + publisher + '\'' +
                 ", ingredients=" + Arrays.toString(ingredients) +
-                ", sourceURL='" + sourceURL + '\'' +
-                ", recipeID='" + recipeID + '\'' +
-                ", imageURL='" + imageURL + '\'' +
-                ", socialRank=" + socialRank +
-                ", publisherURL='" + publisherURL + '\'' +
+                ", sourceURL='" + source_url + '\'' +
+                ", recipeID='" + recipe_id + '\'' +
+                ", imageURL='" + image_url + '\'' +
+                ", publisherURL='" + publisher_url + '\'' +
                 ", title='" + title + '\'' +
                 '}';
     }
@@ -142,11 +130,10 @@ public class Recipe implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(publisher);
         dest.writeStringArray(ingredients);
-        dest.writeString(sourceURL);
-        dest.writeString(recipeID);
-        dest.writeString(imageURL);
-        dest.writeLong(socialRank);
-        dest.writeString(publisherURL);
+        dest.writeString(source_url);
+        dest.writeString(recipe_id);
+        dest.writeString(image_url);
+        dest.writeString(publisher_url);
         dest.writeString(title);
     }
 }

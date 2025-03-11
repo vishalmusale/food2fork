@@ -9,6 +9,8 @@ activity = "1.10.1"
 constraintlayout = "2.1.4"
 retrofit = "2.11.0"
 lifecycle_version = "2.8.7"
+rxjava_version = "3.1.8"
+rxandroid_version = "3.0.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -22,6 +24,8 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit"}
 viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle_version"}
 livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle_version"}
+rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava_version"}
+rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid_version"}
 
 
 [plugins]

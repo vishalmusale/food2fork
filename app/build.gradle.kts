@@ -46,4 +46,8 @@ dependencies {
 
     implementation(libs.viewmodel)
     implementation(libs.livedata)
+
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
+
 }
