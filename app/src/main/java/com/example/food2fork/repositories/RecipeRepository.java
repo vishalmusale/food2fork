@@ -32,6 +32,14 @@ public class RecipeRepository  {
         mRecipeApiClient.searchRecipes(query);
     }
 
+    public LiveData<Recipe> getRecipe() {
+        return mRecipeApiClient.getRecipe();
+    }
+
+    public void getRecipeApi(String recipeId){
+        mRecipeApiClient.getRecipeById(recipeId);
+    }
+
     public void cancelRequest(){
         mRecipeApiClient.clearDisposables();
     }

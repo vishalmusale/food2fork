@@ -13,4 +13,8 @@ public class Testing {
             Log.d(tag, "printRecipes: " + recipe.toString());
         }
     }
+
+    public static void printRecipe(String tag, Recipe recipe){
+        Log.d(tag, "printRecipe: " + recipe.toString());
+    }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.food2fork.models.Recipe;
+import com.example.food2fork.requests.response.RecipeResponse;
 import com.example.food2fork.requests.response.RecipeSearchResponse;
 
 import java.net.ConnectException;
@@ -26,6 +27,7 @@ public class RecipeApiClient {
     private static final String TAG = "RecipeApiClient";
     private static RecipeApiClient instance;
     private MutableLiveData<List<Recipe>> mRecipes;
+    private MutableLiveData<Recipe> mRecipe;
     private CompositeDisposable disposables = new CompositeDisposable();
 
     public static RecipeApiClient getInstance() {
@@ -38,10 +40,76 @@ public class RecipeApiClient {
 
     private RecipeApiClient() {
         mRecipes = new MutableLiveData<>();
+        mRecipe = new MutableLiveData<>();
     }
 
     public LiveData<List<Recipe>> getRecipes() {
         return mRecipes;
+    }
+
+    public LiveData<Recipe> getRecipe() {
+        return mRecipe;
+    }
+
+    public void getRecipeById(String recipeId) {
+        Observable<Response<RecipeResponse>> observable = getRecipeObservable(recipeId);
+
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<RecipeResponse>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<RecipeResponse> response) {
+                        if(response.isSuccessful()) {
+                            mRecipe.postValue(response.body().getRecipe());
+                        }
+                        else {
+                            Log.d(TAG, "onNext: Error code = " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: Error during network call", e); // Log the error with stack trace
+
+                        if (e instanceof UnknownHostException) {
+                            Log.e(TAG, "onError: UnknownHostException - Check internet or hostname");
+                        } else if (e instanceof ConnectException) {
+                            Log.e(TAG, "onError: ConnectException - Check server or network");
+                        } else {
+                            Log.e(TAG, "onError: Other Error - Check details");
+                        }
+
+                        mRecipe.postValue(null);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        // Optional: Called when the Observable completes
+                        Log.d(TAG, "onComplete: Observable completed");
+                    }
+                });
+    }
+
+    private Observable<Response<RecipeResponse>> getRecipeObservable(String recipeId) {
+        return Observable.create(emitter -> {
+            try {
+                Call<RecipeResponse> call = ServiceGenerator.getRecipeApi().getRecipe(recipeId);
+                Response<RecipeResponse> response = call.execute(); // Execute call synchronously
+                if (!emitter.isDisposed()) {
+                    emitter.onNext(response); // Emit the response
+                    emitter.onComplete(); // Signal completion
+                }
+            } catch (Throwable e) {
+                if (!emitter.isDisposed()) {
+                    emitter.onError(e); // Emit error
+                }
+            }
+        });
     }
 
     public void searchRecipes(String query) {
