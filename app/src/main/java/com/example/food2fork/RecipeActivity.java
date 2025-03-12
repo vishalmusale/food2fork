@@ -2,6 +2,8 @@ package com.example.food2fork;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.food2fork.models.Recipe;
 import com.example.food2fork.util.Testing;
 import com.example.food2fork.viewmodels.RecipeViewModel;
@@ -37,7 +41,7 @@ public class RecipeActivity extends BaseActivity{
 
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
 
-
+        showProgressBar(true);
         getIntentExtra();
         subscribeObservers();
     }
@@ -55,14 +59,39 @@ public class RecipeActivity extends BaseActivity{
         mRecipeViewModel.getRecipe().observe(this, new Observer<Recipe>() {
             @Override
             public void onChanged(@Nullable Recipe recipe) {
-                if(recipe != null){
+                if(recipe != null && mRecipeViewModel.getRecipeId().equals(recipe.getRecipeID())){
                     mRecipeViewModel.setIsPerformingQuery(false);
-                    Testing.printRecipe("network test", recipe);
-                    for (String ingredient : recipe.getIngredients()) {
-                        Log.d(TAG, "onChanged: Ingredient: " + ingredient);
-                    }
+                    setRecipeProperties(recipe);
                 }
             }
         });
+    }
+
+    private void setRecipeProperties(Recipe recipe){
+        if(recipe != null){
+            RequestOptions requestOptions = new RequestOptions()
+                    .placeholder(R.drawable.ic_launcher_foreground);
+            Glide.with(this)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(recipe.getImageURL())
+                    .into(imageView);
+            mRecipeTitle.setText(recipe.getTitle());
+            mRecipeSocialScore.setText(String.valueOf(Math.round(recipe.getSocialRank())));
+            mIngredientsContainer.removeAllViews();
+            for(String ingredient : recipe.getIngredients()) {
+                TextView textView = new TextView(this);
+                textView.setText(ingredient);
+                textView.setTextSize(15);
+                textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT ));
+                textView.setPadding(16, 16, 16, 16);
+                mIngredientsContainer.addView(textView);
+            }
+        }
+        showParent();
+        showProgressBar(false);
+    }
+
+    private void showParent() {
+        scrollView.setVisibility(View.VISIBLE);
     }
 }

@@ -9,6 +9,7 @@ import com.example.food2fork.repositories.RecipeRepository;
 public class RecipeViewModel extends ViewModel {
     private RecipeRepository mRecipeRepository;
     private boolean mIsPerformingQuery;
+    private String mRecipeId;
 
     public RecipeViewModel() {
         mRecipeRepository = RecipeRepository.getInstance();
@@ -19,7 +20,12 @@ public class RecipeViewModel extends ViewModel {
         return mRecipeRepository.getRecipe();
     }
 
-    public void getRecipeApi(String recipeId){
+    public String getRecipeId() {
+        return mRecipeId;
+    }
+
+    public void getRecipeApi(String recipeId) {
+        mRecipeId = recipeId;
         mRecipeRepository.getRecipeApi(recipeId);
     }
 
