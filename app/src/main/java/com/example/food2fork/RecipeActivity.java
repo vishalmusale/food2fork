@@ -10,15 +10,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.food2fork.models.Recipe;
-import com.example.food2fork.util.Testing;
 import com.example.food2fork.viewmodels.RecipeViewModel;
-
-import androidx.lifecycle.Observer;
 
 public class RecipeActivity extends BaseActivity{
     private static final String TAG = "RecipeActivity";
