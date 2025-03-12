@@ -1,5 +1,6 @@
 package com.example.food2fork;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -95,7 +96,9 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onRecipeClick(int position) {
-        Log.d(TAG, "onRecipeClick: clicked. " + position);
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra("recipe", mRecipeRecyclerAdapter.getSelectedRecipe(position));
+        startActivity(intent);
     }
 
     @Override
