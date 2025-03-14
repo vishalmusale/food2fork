@@ -129,12 +129,7 @@ public class RecipeApiClient {
                     public void onNext(Response<RecipeSearchResponse> response) {
                         if (response.isSuccessful()) {
                             List<Recipe> list = new ArrayList<>(response.body().getRecipes());
-                            List<Recipe> currentRecipes = mRecipes.getValue();
-                            if (currentRecipes == null) {
-                                currentRecipes = new ArrayList<>();
-                            }
-                            currentRecipes.addAll(list);
-                            mRecipes.postValue(currentRecipes); // Update UI on the main thread
+                            mRecipes.postValue(list); // Update UI on the main thread
                         } else {
                             // Handle error
                             Log.e(TAG, "onNext: Error Code: " + response.code());
