@@ -34,28 +34,33 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
         mRecipeListViewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
         initRecyclerView();
-        subscribeObservers();
         initSearchView();
-        if(!mRecipeListViewModel.ismIsViewingRecipes()){
-            displaySearchCategories();
-        }
+        subscribeObserver();
+    }
 
-        //  BackPress
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (mRecipeListViewModel.onBackPressed()) {
-                    // If the ViewModel allows back navigation, finish the activity
-                    finish();
-                } else {
-                    // Otherwise, display search categories
-                    displaySearchCategories();
+    private void subscribeObserver() {
+        mRecipeListViewModel.getViewState().observe(
+                this,
+                new Observer<RecipeListViewModel.ViewState>() {
+                    @Override
+                    public void onChanged(RecipeListViewModel.ViewState viewState) {
+                        if(viewState != null) {
+                            switch (viewState) {
+                                case RECIPES:
+                                    Log.d(TAG, "onChanged: RECIPES");
+                                    break;
+                                case CATEGORIES:
+                                    displaySearchCategories();
+                                    break;
+                            }
+                        }
+                    }
                 }
-            }
-        };
+        );
+    }
 
-        // Register the callback with the OnBackPressedDispatcher
-        getOnBackPressedDispatcher().addCallback(this, callback);
+    private void displaySearchCategories() {
+        mRecipeRecyclerAdapter.displaySearchCategories();
     }
 
     private void initSearchView() {
@@ -63,8 +68,6 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mRecipeRecyclerAdapter.displayLoading();
-                mRecipeListViewModel.searchRecipesApi(query, 1);
                 return false;
             }
 
@@ -81,34 +84,13 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void subscribeObservers() {
-        mRecipeListViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(@Nullable List<Recipe> recipes) {
-                if(recipes != null){
-                    mRecipeListViewModel.setmIsPerformingQuery(false);
-                    Testing.printRecipes("network test", recipes);
-                    mRecipeRecyclerAdapter.setRecipes(recipes);
-                }
-            }
-        });
-    }
-
     @Override
     public void onRecipeClick(int position) {
-        Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra("recipe", mRecipeRecyclerAdapter.getSelectedRecipe(position));
-        startActivity(intent);
+
     }
 
     @Override
     public void onCategoryClick(String category) {
-        mRecipeRecyclerAdapter.displayLoading();
-        mRecipeListViewModel.searchRecipesApi(category, 1);
-    }
 
-    private void displaySearchCategories(){
-        mRecipeListViewModel.setmIsViewingRecipes(false);
-        mRecipeRecyclerAdapter.displaySearchCategories();
     }
 }
