@@ -1,11 +1,8 @@
 package com.example.food2fork;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,11 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.food2fork.adapters.OnRecipeListener;
 import com.example.food2fork.adapters.RecipeRecyclerAdapter;
-import com.example.food2fork.models.Recipe;
-import com.example.food2fork.util.Testing;
 import com.example.food2fork.viewmodels.RecipeListViewModel;
-
-import java.util.List;
 
 public class RecipeListActivity extends BaseActivity implements OnRecipeListener {
     private static final String TAG = "RecipeListActivity";

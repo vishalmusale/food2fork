@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.livedata)
 
     implementation(libs.rxjava)
+    implementation(libs.rxjava.adapter)
     implementation(libs.rxandroid)
 
     implementation(libs.cardview)
