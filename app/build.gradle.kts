@@ -59,4 +59,10 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
     implementation(libs.circleimageview)
+
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.rxjava3)
+    implementation(libs.room.guava)
+    implementation(libs.room.paging)
 }

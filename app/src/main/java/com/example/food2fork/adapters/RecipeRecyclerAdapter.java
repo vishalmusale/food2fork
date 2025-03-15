@@ -65,18 +65,18 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     .placeholder(R.drawable.ic_launcher_foreground);
             Glide.with(holder.itemView.getContext())
                     .setDefaultRequestOptions(requestOptions)
-                    .load(mRecipes.get(position).getImageURL())
+                    .load(mRecipes.get(position).getImage_url())
                     .into(((RecipeViewHolder)holder).image);
             ((RecipeViewHolder)holder).title.setText(mRecipes.get(position).getTitle());
             ((RecipeViewHolder)holder).publisher.setText(mRecipes.get(position).getPublisher());
-            ((RecipeViewHolder)holder).socialScore.setText(String.valueOf(Math.round(mRecipes.get(position).getSocialRank())));
+            ((RecipeViewHolder)holder).socialScore.setText(String.valueOf(Math.round(mRecipes.get(position).getSocial_rank())));
         }
         else if(itemViewType == CATEGORY_TYPE){
             RequestOptions requestOptions = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.drawable.ic_launcher_foreground);
 
-            Uri path = Uri.parse("android.resource://com.example.food2fork/drawable/" + mRecipes.get(position).getImageURL());
+            Uri path = Uri.parse("android.resource://com.example.food2fork/drawable/" + mRecipes.get(position).getImage_url());
             Glide.with(((CategoryViewHolder)holder).itemView)
                     .setDefaultRequestOptions(requestOptions)
                     .load(path)
@@ -88,7 +88,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        if(mRecipes.get(position).getSocialRank() == -1) {
+        if(mRecipes.get(position).getSocial_rank() == -1) {
             return CATEGORY_TYPE;
         }
         else if(mRecipes.get(position).getTitle().equals("LOADING...")) {
@@ -133,8 +133,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         for(int i = 0; i < Constants.DEFAULT_SEARCH_CATEGORIES.length; i++){
             Recipe recipe = new Recipe();
             recipe.setTitle(Constants.DEFAULT_SEARCH_CATEGORIES[i]);
-            recipe.setImageURL(Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]);
-            recipe.setSocialRank(-1);
+            recipe.setImage_url(Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]);
+            recipe.setSocial_rank(-1);
             categories.add(recipe);
         }
         mRecipes = categories;

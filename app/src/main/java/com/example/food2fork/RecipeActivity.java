@@ -49,7 +49,7 @@ public class RecipeActivity extends BaseActivity{
             Recipe recipe = getIntent().getParcelableExtra("recipe");
             assert recipe != null;
             Log.d(TAG, "getIntentExtra: " + recipe.getTitle());
-            mRecipeViewModel.getRecipeApi(recipe.getRecipeID());
+            mRecipeViewModel.getRecipeApi(recipe.getRecipe_id());
         }
     }
 
@@ -57,7 +57,7 @@ public class RecipeActivity extends BaseActivity{
         mRecipeViewModel.getRecipe().observe(this, new Observer<Recipe>() {
             @Override
             public void onChanged(@Nullable Recipe recipe) {
-                if(recipe != null && mRecipeViewModel.getRecipeId().equals(recipe.getRecipeID())){
+                if(recipe != null && mRecipeViewModel.getRecipeId().equals(recipe.getRecipe_id())){
                     mRecipeViewModel.setIsPerformingQuery(false);
                     setRecipeProperties(recipe);
                 }
@@ -71,10 +71,10 @@ public class RecipeActivity extends BaseActivity{
                     .placeholder(R.drawable.ic_launcher_foreground);
             Glide.with(this)
                     .setDefaultRequestOptions(requestOptions)
-                    .load(recipe.getImageURL())
+                    .load(recipe.getImage_url())
                     .into(imageView);
             mRecipeTitle.setText(recipe.getTitle());
-            mRecipeSocialScore.setText(String.valueOf(Math.round(recipe.getSocialRank())));
+            mRecipeSocialScore.setText(String.valueOf(Math.round(recipe.getSocial_rank())));
             mIngredientsContainer.removeAllViews();
             for(String ingredient : recipe.getIngredients()) {
                 TextView textView = new TextView(this);
